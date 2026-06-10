@@ -2,8 +2,6 @@ backend:
   name: github
   repo: zhaoruizhe81-bot/blog
   branch: main
-  auth_type: pkce
-  app_id: "Ov23lilzDrdViYY3opjY"
 
 media_folder: "src/assets/images/posts"
 public_folder: "@assets/images/posts"
