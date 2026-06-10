@@ -1,0 +1,32 @@
+backend:
+  name: github
+  repo: zhaoruizhe81-bot/blog
+  branch: main
+  base_url: https://api.github.com
+  auth_endpoint: ''
+
+media_folder: "src/assets/images/posts"
+public_folder: "@assets/images/posts"
+
+locale: "zh_Hans"
+
+collections:
+  - name: "posts"
+    label: "文章"
+    folder: "src/content/posts"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "发布日期", name: "published", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD" }
+      - { label: "更新日期", name: "updated", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", required: false }
+      - { label: "描述", name: "description", widget: "string", required: false }
+      - { label: "封面图", name: "image", widget: "image", required: false }
+      - { label: "标签", name: "tags", widget: "list", allow_add: true, required: false }
+      - { label: "分类", name: "category", widget: "string", required: false }
+      - { label: "语言", name: "lang", widget: "string", required: false }
+      - { label: "草稿", name: "draft", widget: "boolean", default: false, required: false }
+      - { label: "正文", name: "body", widget: "markdown" }
