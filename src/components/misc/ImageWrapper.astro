@@ -32,16 +32,27 @@ if (isLocal) {
 	const files = import.meta.glob<ImageMetadata>("../../**", {
 		import: "default",
 	});
+	// Sveltia/Decap CMS 用 "@assets/..." 作为图片引用别名(见 public/admin/config.yml
+	// 的 public_folder),直接映射到 src/assets 下解析,不依赖文章所在目录的深度。
+	const isAlias = src.startsWith("@assets/");
+	const resolvedSrc = isAlias
+		? `assets/${src.slice("@assets/".length)}`
+		: src;
 	let normalizedPath = path
-		.normalize(path.join("../../", basePath, src))
+		.normalize(
+			isAlias
+				? path.join("../../", resolvedSrc)
+				: path.join("../../", basePath, src),
+		)
 		.replace(/\\/g, "/");
 	const file = files[normalizedPath];
 	if (!file) {
 		console.error(
 			`\n[ERROR] Image file not found: ${normalizedPath.replace("../../", "src/")}`,
 		);
+	} else {
+		img = await file();
 	}
-	img = await file();
 }
 
 const imageClass = "w-full h-full object-cover";
